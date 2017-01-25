@@ -1,0 +1,84 @@
+{% load staticfiles %}
+
+<!-- 第一种分页显示方式 -->
+{% comment %}<p>
+{% if idc_list.has_previous %}
+  <a href="?page={{ idc_list.previous_page_number }}">上一页</a>
+  {% endif %}
+ {{ idc_list.number }} of {{ idc_list.paginator.num_pages }}.
+{% if idc_list.has_next %}
+  <a href="?page={{ idc_list.next_page_number }}">下一页</a>
+{% endif %}
+</p>{% endcomment %}
+
+
+{#<!-- 第二种分页显示方式 -->#}
+{#<p>#}
+  {# idc_list.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
+  {# 即 range(1, idc_list.paginator.num_pages + 1) #}
+{#  {% for page_number in idc_list.paginator.page_range %}#}
+{#    {% ifequal page_number  idc_list.number %}#}
+{#      {{ page_number }}#}
+{#    {% else %}#}
+{#      <a href="?page={{ page_number }}">{{ page_number }}</a>#}
+{#    {% endifequal %}#}
+{#  {% endfor %}#}
+{#</p>#}
+
+
+{# 分页部分 #}
+{#<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">#}
+<style>
+    .pagination{
+        margin:0;
+    }
+</style>
+
+<div class="col-m-12">
+
+    <div class="col-md-6">
+        共{{pages.count}}条数据。当前第{{data_list.number}}页，共{{pages.num_pages}}页
+    </div>
+    <div class="col-md-6">
+        <ul class="pagination pull-right">
+            {# 上一页，这里需要用到has_previous方法判断是否有上一页 #}
+            <li>
+                <a href="?page=
+                    {% if data_list.has_previous %}
+                        {{data_list.previous_page_number}}
+                    {% else %}
+                        {{data_list.number}}
+                    {% endif %}
+                " aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {# 遍历所有页码 #}
+            {% for page in pages.page_range %}
+                <li><a href="?page={{page}}">{{page}}</a></li>
+            {% endfor %}
+
+            {# 下一页，这里需要用到has_next方法判断是否有下一页 #}
+            <li>
+                <a href="?page=
+                    {% if data_list.has_next %}
+                        {{data_list.next_page_number}}
+                    {% else %}
+                        {{data_list.number}}
+                    {% endif %}
+                " aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<script src="{% static 'extra/js/jquery.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(".pagination li:eq({{data_list.number}})").addClass("active");
+</script>

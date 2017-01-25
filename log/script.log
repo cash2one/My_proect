@@ -1,0 +1,4 @@
+2017-01-12 14:27:23,529 [Thread-7:7576] [django.request:170] [base:get_response] [WARNING]- Not Found: /asset
+2017-01-12 14:31:34,342 [Thread-51:3896] [django.request:170] [base:get_response] [WARNING]- Not Found: /asset
+2017-01-12 15:18:10,226 [Thread-165:1760] [django.request:170] [base:get_response] [WARNING]- Not Found: /addhost/
+2017-01-12 15:18:58,107 [Thread-169:5136] [django.request:170] [base:get_response] [WARNING]- Not Found: /addhost/
